@@ -75,13 +75,14 @@ public class Unite : MonoBehaviour
         set { vitesse_projectiles = value; }
     }
 
-    public Unite(int positionx, int positiony, int positionz, int vie, int attaque)
+    public void Initialisation(int positionx, int positiony, int positionz, int vie, int attaque,float vitesse_projectiles)
     {
         this.positionx = positionx;
         this.positiony = positiony;
         this.positionz = positionz;
         this.vie = vie;
         this.attaque = attaque;
+        this.vitesse_projectiles = vitesse_projectiles;
     }
 
 
@@ -107,11 +108,25 @@ public class Unite : MonoBehaviour
             Destroy(this.gameObject);
         }
         
-        if(UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        if(UnityEngine.Input.GetKeyDown(KeyCode.T))
         {
             Debug.Log("Tir");
-            var bullet = Instantiate(bulletPrefab, GetPosition(), GetUniteRotation());
-            bullet.GetComponent<Rigidbody>().velocity = transform.forward * vitesse_projectiles;
+            //Ici on récupère le point visé par la caméra 
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+            Vector3 targetDirection = ray.direction;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+
+            var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile"), GetPosition(), targetRotation);
+
+            // Récupérez la rotation du projectile
+            Quaternion bulletRotation = bullet.transform.rotation;
+            // Utilisez la rotation pour calculer la direction de déplacement
+            Vector3 moveDirection = bulletRotation * Vector3.forward;
+            // Affectez cette direction à la vélocité du Rigidbody
+            bullet.GetComponent<Rigidbody>().velocity = moveDirection * vitesse_projectiles;
+            Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
         }
     }
 

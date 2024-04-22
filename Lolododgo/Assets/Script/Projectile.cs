@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float vie=3;
+    public float vie = 1;   
 
-    void Reveil()
+    void Awake()
     {
+        Debug.Log("Projectile initialized.");
         Destroy(gameObject, vie);
     }
 
