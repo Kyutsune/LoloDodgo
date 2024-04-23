@@ -22,9 +22,11 @@ public class Unite : MonoBehaviour
 
 
 
-    public float temps_lever_arme=0.4f; 
-    public float shootingDuration = 0.50f;
-    private float shootingTimer = 0.0f;
+    ///Ici on a les valeurs qui vont nous servir a faire marcher l'animation de tir de l'unité
+    //Celle ci correspond au temps nécessaire à la transition entre la marche et le tir
+    public float temps_lever_arme=1.28f; 
+    //Ici le temps qui correspond au tir,puis au temps pour se remettre en marche
+    public float shootingDuration = 1.72f;
     public bool en_position_pour_tirer=false;
 
 
