@@ -21,7 +21,7 @@ public class ScriptCamera : MonoBehaviour
 {
     void Start()
     {
-        transform.position = new Vector3(0f, 0f, 0f);
+        transform.position = new Vector3(0f, 0f, -10f);
     }
 
     public float movementSpeed = 5f;

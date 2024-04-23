@@ -8,7 +8,6 @@ public class Projectile : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Projectile initialized.");
         Destroy(gameObject, vie);
     }
 
