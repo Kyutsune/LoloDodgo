@@ -2,21 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-Module Servant à mouvoir et utiliser la caméra,
-touches: 
-z:avancer 
-q:aller à gauche 
-s:reculer 
-d:aller à droite
-Espace:monter
-Shift:Descendre
-Clic droit souris+bouger:Bouger la caméra 
-*/
-
-
-
-
 public class ScriptCamera : MonoBehaviour
 {
     public Unite unite_a_suivre;
