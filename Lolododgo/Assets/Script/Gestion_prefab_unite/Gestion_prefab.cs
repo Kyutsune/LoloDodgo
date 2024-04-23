@@ -28,6 +28,7 @@ public class Gestion_prefab
     public void DeplacerPrefab_a_partir_unite(GameObject objet, Unite unite)
     {
         objet.transform.position = new Vector3(unite.Positionx, unite.Positiony, unite.Positionz);
+        objet.transform.rotation = unite.GetRotation();
     }
 
 }

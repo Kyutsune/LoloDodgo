@@ -14,10 +14,11 @@ public class Jeu : MonoBehaviour
     {
         gestion_prefab = new Gestion_prefab();
         unite_test = gameObject.AddComponent<Unite_humaine>();
-        unite_test.Initialisation(0, 0, 0, 100, 10, 10);
+        unite_test.Initialisation(0, 0, 0, 100, 10, 10, 5);
         corps_unite_test = gestion_prefab.CreerPrefab(unite_test.Positionx, unite_test.Positiony, unite_test.Positionz);
         animator_controller = gameObject.AddComponent<Controleur_Animation>();
         animator_unite_a_controller=corps_unite_test.GetComponent<Animator>();
+
     }
 
     void Update()
@@ -25,6 +26,5 @@ public class Jeu : MonoBehaviour
         unite_test.GestionEvenement();
         gestion_prefab.DeplacerPrefab_a_partir_unite(corps_unite_test, unite_test);
         animator_controller.animation(unite_test, animator_unite_a_controller);
-        unite_test.Recuperation_valeurs_clic_souris();
     }
 }

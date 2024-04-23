@@ -101,7 +101,7 @@ public class Unite : MonoBehaviour
         set { isshooting = value; }
     }
 
-    public void Initialisation(float positionx, float positiony, float positionz, int vie, int attaque, float vitesse_projectiles)
+    public void Initialisation(float positionx, float positiony, float positionz, int vie, int attaque, float vitesse_projectiles,int VitesseDeplacement)
     {
         this.positionx = positionx;
         this.positiony = positiony;
@@ -112,6 +112,7 @@ public class Unite : MonoBehaviour
         this.iswalking = true;
         this.isshooting = false;
         this.en_position_pour_tirer=false;
+        this.vitesse_deplacement=VitesseDeplacement;
     }
 
 
@@ -147,7 +148,6 @@ public class Unite : MonoBehaviour
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log(iswalking);
             if(iswalking==true)
             {
                 StartShooting(temps_lever_arme,shootingDuration);
@@ -179,7 +179,7 @@ public class Unite : MonoBehaviour
         en_position_pour_tirer=false;
 
         // Obtenez la rotation de votre unité
-        Quaternion unitRotation = transform.rotation;
+        Quaternion unitRotation = GetRotation();
 
         // Créez le projectile avec la rotation de l'unité
         var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile"), GetPosition(), unitRotation);
@@ -207,7 +207,10 @@ public class Unite : MonoBehaviour
         iswalking = true;
     }   
 
-
+    public Quaternion GetRotation()
+    {
+        return transform.rotation;
+    }
 
 
 }

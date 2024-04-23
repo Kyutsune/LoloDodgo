@@ -4,23 +4,54 @@ using UnityEngine;
 
 public class Unite_humaine : Unite 
 {
-    public void Recuperation_valeurs_clic_souris()
+    private Vector3 destination; // La destination vers laquelle l'unité se déplace
+    private bool enDeplacement; // Indique si l'unité est en train de se déplacer
+
+    public void Deplacement(Vector3 destination)
     {
-        float sourisx = 0f;
-        float sourisy = 0f;
-        float sourisz = 0f;
-        
+        // Calculer la direction vers la destination
+        Vector3 direction = (destination - transform.position).normalized;
+
+        // Déplacer l'unité
+        transform.position = Vector3.MoveTowards(transform.position, destination, VitesseDeplacement * Time.deltaTime);
+        Deplacer(transform.position.x, transform.position.y, transform.position.z);
+
+        // Si l'unité n'est pas encore arrivée à destination
+        if (transform.position != destination)
+        {
+            // Calculer la rotation vers la direction
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            // Interpoler entre la rotation actuelle et la rotation vers la direction
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5*Time.deltaTime);
+        }
+
+        // Si l'unité a atteint sa destination
+        if (transform.position == destination)
+        {
+            enDeplacement = false; // Arrêter le déplacement
+        }
+    }
+
+    void Update()
+    {
+        // Si le clic de souris est effectué
         if (Input.GetMouseButtonDown(1))
         {
+            // Récupérer la position de la souris
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                sourisx = hit.point.x;
-                sourisy = hit.point.y;
-                sourisz = hit.point.z;
+                destination = hit.point; // Définir la nouvelle destination
+                destination.y = 0;
+                enDeplacement = true; // Commencer le déplacement
             }
         }
-        Debug.Log(sourisx + " " + sourisy + " " + sourisz);
+
+        // Si l'unité est en train de se déplacer
+        if (enDeplacement)
+        {
+            Deplacement(destination); // Déplacer vers la destination
+        }
     }
 }
