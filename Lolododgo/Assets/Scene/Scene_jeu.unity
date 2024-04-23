@@ -159,7 +159,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: a621c9a49d287134c944bea9fcca2cdf, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: fdbbe2e11a062644a8043f744c3e3b61, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &691294514
 Terrain:
@@ -458,10 +458,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24c9648c4b7d0141a37574e7d93bd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unite_a_suivre: {fileID: 0}
+  decalage_x: 5
+  decalage_y: 5
+  decalage_z: 8
   movementSpeed: 5
   rotationSpeed: 3
-  verticalLookLimit: 80
-  groundHeight: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
