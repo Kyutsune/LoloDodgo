@@ -36,19 +36,20 @@ public class Unite_humaine : Unite
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            int terrainLayerMask = 1 << LayerMask.NameToLayer("Terrain"); // Crée un masque pour le layer "Terrain"
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, terrainLayerMask)) // Utilise le masque pour filtrer les collisions
             {
                 destination = hit.point; 
                 destination.y = 0;
                 IsWalking = true;
             }
         }
+
         // On autorise le déplacement uniquement si on n'est pas en train de tirer
         if (IsWalking && !en_position_pour_tirer)
         {
             Deplacement(destination); 
         }
-
 
         ///Ici on veut permettre à l'utilisateur de cliquer pour changer son orientation avant d'envoyer son projectile
         ///Bien qu'il ne puisse pas bouger
@@ -59,4 +60,5 @@ public class Unite_humaine : Unite
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5*Time.deltaTime);
         }
     }
+
 }
