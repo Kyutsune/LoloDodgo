@@ -43,9 +43,20 @@ public class Unite_humaine : Unite
                 IsWalking = true;
             }
         }
-        if (IsWalking)
+        // On autorise le déplacement uniquement si on n'est pas en train de tirer
+        if (IsWalking && !en_position_pour_tirer)
         {
             Deplacement(destination); 
+        }
+
+
+        ///Ici on veut permettre à l'utilisateur de cliquer pour changer son orientation avant d'envoyer son projectile
+        ///Bien qu'il ne puisse pas bouger
+        if(en_position_pour_tirer)
+        {
+            Vector3 direction = (destination - transform.position).normalized;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5*Time.deltaTime);
         }
     }
 }
