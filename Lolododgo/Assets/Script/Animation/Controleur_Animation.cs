@@ -34,7 +34,6 @@ public class Controleur_Animation : MonoBehaviour
 
     public new void animation(Unite unite_a_animer, Animator animator)
     {
-        Debug.Log(unite_a_animer.IsWalking);
         if (unite_a_animer.IsWalking)
         {
             setWalking(true, animator);

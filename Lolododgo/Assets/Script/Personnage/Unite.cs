@@ -171,17 +171,21 @@ public class Unite : MonoBehaviour
 
         // Obtenez la rotation de votre unité
         Quaternion unitRotation = GetRotation();
+        Debug.Log("unitRotation : " + unitRotation);
 
         // Créez le projectile avec la rotation de l'unité
-        var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile"), GetPosition(), unitRotation);
+        var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile_final"), GetPosition(), unitRotation);
         bullet.layer = LayerMask.NameToLayer("Projectile_roro");
 
         // Utilisez la rotation pour calculer la direction de déplacement
         Vector3 moveDirection = unitRotation * Vector3.forward;
 
+
+        // Affectez une rotation particulière au projectile
+        bullet.transform.rotation = Quaternion.Euler(270,unitRotation.eulerAngles.y, 0);
+
         // Affectez cette direction à la vélocité du Rigidbody du projectile
         bullet.GetComponent<Rigidbody>().velocity = moveDirection * vitesse_projectiles;
-
     }
 
     // Coroutine pour arrêter le tir après une durée spécifiée
