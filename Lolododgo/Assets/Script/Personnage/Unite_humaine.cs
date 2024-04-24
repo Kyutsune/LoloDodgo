@@ -32,7 +32,7 @@ public class Unite_humaine : Unite
 
     void Update()
     {   
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
