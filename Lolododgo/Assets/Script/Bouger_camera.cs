@@ -19,7 +19,7 @@ public class ScriptCamera : MonoBehaviour
         transform.rotation = Quaternion.Euler(23f, -33f, 0f);
 
         decalage_x = 9;
-        decalage_y = 5;
+        decalage_y = 7;
         decalage_z = 2;
 
         unite_a_suivre = FindObjectOfType<Unite_humaine>();
