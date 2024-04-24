@@ -109,7 +109,7 @@ public class Unite : MonoBehaviour
         this.vie = vie;
         this.attaque = attaque;
         this.vitesse_projectiles = vitesse_projectiles;
-        this.iswalking = true;
+        this.iswalking = false;
         this.isshooting = false;
         this.en_position_pour_tirer=false;
         this.vitesse_deplacement=VitesseDeplacement;
@@ -137,18 +137,9 @@ public class Unite : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        if (Positionx < 10 && Positiony < 10)
+        if(UnityEngine.Input.GetKeyDown(KeyCode.T))
         {
-            // Vector3 targetPosition = new Vector3(Positionx + 1, Positiony + 1, Positionz);
-            // float speed = 2.0f;
-            // transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-            Deplacer(transform.position.x, transform.position.y, transform.position.z);
-        }
-
-        if (UnityEngine.Input.GetKeyDown(KeyCode.T))
-        {
-            if(iswalking==true)
+            if(IsWalking==true)
             {
                 StartShooting(temps_lever_arme,shootingDuration);
                 StopWalking(temps_lever_arme+shootingDuration);
@@ -175,7 +166,7 @@ public class Unite : MonoBehaviour
         en_position_pour_tirer=true;
         yield return new WaitForSeconds(duration);
         IsShooting = true;
-        iswalking = false;
+        IsWalking = false;
         en_position_pour_tirer=false;
 
         // Obtenez la rotation de votre unité
@@ -202,9 +193,10 @@ public class Unite : MonoBehaviour
 
     IEnumerator StopWalkingForDuration(float duration)
     {
-        iswalking = false;
+        IsWalking = false;
+
         yield return new WaitForSeconds(duration);
-        iswalking = true;
+        IsWalking = true;
     }   
 
     public Quaternion GetRotation()

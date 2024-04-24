@@ -5,8 +5,6 @@ using UnityEngine;
 public class Unite_humaine : Unite 
 {
     private Vector3 destination; // La destination vers laquelle l'unité se déplace
-    private bool enDeplacement; // Indique si l'unité est en train de se déplacer
-
     public void Deplacement(Vector3 destination)
     {
         // Calculer la direction vers la destination
@@ -28,30 +26,26 @@ public class Unite_humaine : Unite
         // Si l'unité a atteint sa destination
         if (transform.position == destination)
         {
-            enDeplacement = false; // Arrêter le déplacement
+            IsWalking = false; // Arrêter le déplacement
         }
     }
 
     void Update()
-    {
-        // Si le clic de souris est effectué
+    {   
         if (Input.GetMouseButtonDown(1))
         {
-            // Récupérer la position de la souris
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                destination = hit.point; // Définir la nouvelle destination
+                destination = hit.point; 
                 destination.y = 0;
-                enDeplacement = true; // Commencer le déplacement
+                IsWalking = true;
             }
         }
-
-        // Si l'unité est en train de se déplacer
-        if (enDeplacement)
+        if (IsWalking)
         {
-            Deplacement(destination); // Déplacer vers la destination
+            Deplacement(destination); 
         }
     }
 }

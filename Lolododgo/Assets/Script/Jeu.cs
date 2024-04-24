@@ -19,6 +19,8 @@ public class Jeu : MonoBehaviour
         animator_controller = gameObject.AddComponent<Controleur_Animation>();
         animator_unite_a_controller=corps_unite_test.GetComponent<Animator>();
 
+        animator_controller.Start_animator_controler(animator_unite_a_controller);
+
     }
 
     void Update()

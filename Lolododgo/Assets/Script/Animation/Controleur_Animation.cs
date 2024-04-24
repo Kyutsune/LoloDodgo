@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class Controleur_Animation : MonoBehaviour
 {
+    public void Start_animator_controler(Animator animator)
+    {
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsShooting", false);
+        animator.SetBool("Se_prepare_a_tirer", false);
+    }
+
+
     public void setWalking(bool walk, Animator animator)
     {
         animator.SetBool("IsWalking", walk);
         animator.SetBool("IsShooting", false);
+        animator.SetBool("Se_prepare_a_tirer", false);
     }
 
     public void setShooting(bool fight, Animator animator)
@@ -23,8 +32,9 @@ public class Controleur_Animation : MonoBehaviour
         animator.SetBool("IsShooting", false);
     }
 
-    public void animation(Unite unite_a_animer, Animator animator)
+    public new void animation(Unite unite_a_animer, Animator animator)
     {
+        Debug.Log(unite_a_animer.IsWalking);
         if (unite_a_animer.IsWalking)
         {
             setWalking(true, animator);
@@ -37,5 +47,13 @@ public class Controleur_Animation : MonoBehaviour
         {
             se_prepare_a_tirer(true, animator);
         }
+
+        if(!unite_a_animer.IsWalking && !unite_a_animer.IsShooting && !unite_a_animer.en_position_pour_tirer)
+        {
+            setWalking(false, animator);
+        }
+
+    
+
     }
 }
