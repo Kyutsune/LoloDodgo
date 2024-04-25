@@ -120,6 +120,7 @@ public class Unite : MonoBehaviour
         this.isshooting = false;
         this.en_position_pour_tirer=false;
         this.vitesse_deplacement=VitesseDeplacement;
+        this.vitesse_attaque=1;
         gestion_prefab_unite = new Gestion_prefab();
         corps_unite = gestion_prefab_unite.CreerPrefab(Positionx,Positiony,Positionz);
 
@@ -147,6 +148,28 @@ public class Unite : MonoBehaviour
         unite.vie -= this.attaque;
     }
 
+    public void Tirer_projectile()
+    {
+        if(isshooting)
+        {
+            // Obtenez la rotation de votre unité
+            Quaternion unitRotation = GetRotation();
+
+            // Créez le projectile avec la rotation de l'unité
+            var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile_final"), GetPosition(), unitRotation);
+            bullet.layer = LayerMask.NameToLayer("Projectile_roro");
+
+            // Utilisez la rotation pour calculer la direction de déplacement
+            Vector3 moveDirection = unitRotation * Vector3.forward;
+
+            // Affectez une rotation particulière au projectile
+            bullet.transform.rotation = Quaternion.Euler(270,unitRotation.eulerAngles.y, 0);
+
+            // Affectez cette direction à la vélocité du Rigidbody du projectile
+            bullet.GetComponent<Rigidbody>().velocity = moveDirection * vitesse_projectiles;
+        }
+    }
+
 
 
 ///Ici a titre éducatif,je rajoute l'explication des mots clés protected et virtual (donnée par chatgpt)
@@ -159,78 +182,46 @@ redéfinie dans les classes dérivées si besoin.
     protected virtual void Update()
     {
         if (this.vie <= 0)
-        {
-            Destroy(this.gameObject);
+        {           
             gestion_prefab_unite.DetruirePrefab(corps_unite);
+            Destroy(this.gameObject);
         }
-
-        gestion_prefab_unite.DeplacerPrefab_a_partir_unite(corps_unite, this);
-        animator_controller.animation(this, animator_unite_a_controller);
+        else
+        {
+            gestion_prefab_unite.DeplacerPrefab_a_partir_unite(corps_unite, this);
+            animator_controller.animation(this, animator_unite_a_controller);
+        }
     }
-
 
     public void Tir()
     {
-        if(IsWalking==true)
-        {
-            StartShooting(temps_lever_arme,shootingDuration);
-            StopWalking(temps_lever_arme+shootingDuration);
-        }
+        if(!isshooting && !en_position_pour_tirer)
+        StartShooting(temps_lever_arme,shootingDuration);
     }
-
 
     // Fonction pour démarrer le tir pendant une durée spécifiée
     void StartShooting(float temp_a_lever_arme,float duration)
     {
+        if(VitesseAttaque>1)
+        {
+            temp_a_lever_arme=temp_a_lever_arme/VitesseAttaque;
+            duration=duration/VitesseAttaque;
+        }
         StartCoroutine(Shoot_after_temps_lever_arme(temp_a_lever_arme));
-        StartCoroutine(StopShootingAfterDuration(duration));
-    }
-
-    void StopWalking(float duration)
-    {
-        StartCoroutine(StopWalkingForDuration(duration));
     }
 
 
     IEnumerator Shoot_after_temps_lever_arme(float duration)
     {
+        animator_unite_a_controller.speed *= VitesseAttaque;
         en_position_pour_tirer=true;
-        yield return new WaitForSeconds(duration);
-        IsShooting = true;
-        IsWalking = false;
+        yield return new WaitForSeconds(duration);       
         en_position_pour_tirer=false;
-
-        // Obtenez la rotation de votre unité
-        Quaternion unitRotation = GetRotation();
-
-        // Créez le projectile avec la rotation de l'unité
-        var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile_final"), GetPosition(), unitRotation);
-        bullet.layer = LayerMask.NameToLayer("Projectile_roro");
-
-        // Utilisez la rotation pour calculer la direction de déplacement
-        Vector3 moveDirection = unitRotation * Vector3.forward;
-
-
-        // Affectez une rotation particulière au projectile
-        bullet.transform.rotation = Quaternion.Euler(270,unitRotation.eulerAngles.y, 0);
-
-        // Affectez cette direction à la vélocité du Rigidbody du projectile
-        bullet.GetComponent<Rigidbody>().velocity = moveDirection * vitesse_projectiles;
-    }
-
-    // Coroutine pour arrêter le tir après une durée spécifiée
-    IEnumerator StopShootingAfterDuration(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        IsShooting = false;
-    }
-
-    IEnumerator StopWalkingForDuration(float duration)
-    {
         IsWalking = false;
-
-        yield return new WaitForSeconds(duration);
-        IsWalking = true;
-    }   
+        IsShooting = true;
+        Tirer_projectile();
+        IsShooting=false;
+        animator_unite_a_controller.speed =1;
+    }
 
 }

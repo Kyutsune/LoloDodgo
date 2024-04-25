@@ -55,7 +55,11 @@ public class Unite_humaine : Unite
         ///Bien qu'il ne puisse pas bouger
         if(en_position_pour_tirer)
         {
-            Vector3 direction = (destination - transform.position).normalized;
+            Vector3 direction;
+            if(destination != transform.position)
+                direction = (destination - transform.position).normalized;
+            else 
+                direction = transform.forward;
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5*Time.deltaTime);
         }
