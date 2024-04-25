@@ -126,7 +126,6 @@ public class Unite : MonoBehaviour
         animator_controller = gameObject.AddComponent<Controleur_Animation>();
         animator_unite_a_controller=corps_unite.GetComponent<Animator>();
         animator_controller.Start_animator_controler(animator_unite_a_controller);
-
     }
 
 
@@ -165,20 +164,18 @@ redéfinie dans les classes dérivées si besoin.
             gestion_prefab_unite.DetruirePrefab(corps_unite);
         }
 
-        if(UnityEngine.Input.GetKeyDown(KeyCode.T))
-        {
-            if(IsWalking==true)
-            {
-                StartShooting(temps_lever_arme,shootingDuration);
-                StopWalking(temps_lever_arme+shootingDuration);
-            }
-        }
-
         gestion_prefab_unite.DeplacerPrefab_a_partir_unite(corps_unite, this);
         animator_controller.animation(this, animator_unite_a_controller);
+    }
 
-        
-        Attaquer(this);
+
+    public void Tir()
+    {
+        if(IsWalking==true)
+        {
+            StartShooting(temps_lever_arme,shootingDuration);
+            StopWalking(temps_lever_arme+shootingDuration);
+        }
     }
 
 

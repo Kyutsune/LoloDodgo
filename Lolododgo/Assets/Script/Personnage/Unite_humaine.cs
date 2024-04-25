@@ -59,6 +59,12 @@ public class Unite_humaine : Unite
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5*Time.deltaTime);
         }
+
+        if(UnityEngine.Input.GetKeyDown(KeyCode.T))
+        {
+            Tir();
+        }
+
         base.Update();
     }
 
