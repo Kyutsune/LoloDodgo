@@ -56,7 +56,7 @@ public class Unite : MonoBehaviour
 
     public Vector3 GetPosition() { return new Vector3(positionx, positiony+1, positionz); }
 
-    public Quaternion GetUniteRotation()
+    public Quaternion GetRotation()
     {
         return transform.rotation;
     }
@@ -142,14 +142,14 @@ public class Unite : MonoBehaviour
         this.positionz = newPosition.z;
     }
 
-    public void Attaquer(Unite unite)
+    public void Infliger_degats(Unite unite)
     {
         unite.vie -= this.attaque;
     }
 
 
 
-///Ici a titre éducatif,je rajoute l'explication des mots clés protected et virtual (donnés par chatgpt)
+///Ici a titre éducatif,je rajoute l'explication des mots clés protected et virtual (donnée par chatgpt)
 /* Explication
 En utilisant le modificateur protected, vous permettez aux classes dérivées telles que Unite_humaine d'accéder et de redéfinir 
 la méthode Update() si nécessaire. Notez également l'utilisation du mot-clé virtual, ce qui signifie que cette méthode peut être 
@@ -202,7 +202,6 @@ redéfinie dans les classes dérivées si besoin.
 
         // Obtenez la rotation de votre unité
         Quaternion unitRotation = GetRotation();
-        Debug.Log("unitRotation : " + unitRotation);
 
         // Créez le projectile avec la rotation de l'unité
         var bullet = Instantiate(Resources.Load<GameObject>("Prefab/prefab_Projectile_final"), GetPosition(), unitRotation);
@@ -234,8 +233,4 @@ redéfinie dans les classes dérivées si besoin.
         IsWalking = true;
     }   
 
-    public Quaternion GetRotation()
-    {
-        return transform.rotation;
-    }
 }

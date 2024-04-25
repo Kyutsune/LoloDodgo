@@ -61,10 +61,11 @@ public class Unite_humaine : Unite
         }
 
         if(UnityEngine.Input.GetKeyDown(KeyCode.T))
-        {
             Tir();
-        }
+        
 
+
+        //Ceci veut dire qu'on va chercher le Update de la super classe et l'appliquer ici,après la logique de notre Unite_humaine
         base.Update();
     }
 

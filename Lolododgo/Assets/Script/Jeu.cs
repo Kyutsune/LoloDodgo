@@ -14,6 +14,6 @@ public class Jeu : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(unite_test);
+
     }
 }
