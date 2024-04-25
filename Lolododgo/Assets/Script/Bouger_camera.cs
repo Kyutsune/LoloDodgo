@@ -32,20 +32,23 @@ public class ScriptCamera : MonoBehaviour
 
     void Update()
     {
-        placer_camera_au_dessus_unite(unite_a_suivre);
+        if(unite_a_suivre != null)
+        {
+            placer_camera_au_dessus_unite(unite_a_suivre);
 
-        // Détection du mouvement de la molette de la souris pour rapprocher ou éloigner la caméra
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+            // Détection du mouvement de la molette de la souris pour rapprocher ou éloigner la caméra
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        // Ajustement des valeurs de décalage en fonction du mouvement de la molette de la souris
-        decalage_x -= scroll;
-        decalage_y -= scroll;
-        decalage_z -= scroll;
+            // Ajustement des valeurs de décalage en fonction du mouvement de la molette de la souris
+            decalage_x -= scroll;
+            decalage_y -= scroll;
+            decalage_z -= scroll;
 
-        // Clamping pour éviter des valeurs négatives
-        decalage_x = Mathf.Max(0f, decalage_x);
-        decalage_y = Mathf.Max(0f, decalage_y);
-        decalage_z = Mathf.Max(0f, decalage_z);
+            // Clamping pour éviter des valeurs négatives
+            decalage_x = Mathf.Max(0f, decalage_x);
+            decalage_y = Mathf.Max(0f, decalage_y);
+            decalage_z = Mathf.Max(0f, decalage_z);
+        }
 
         /*On garde ce bout de code ne sait-on jamais
         // Déplacement de la caméra basé sur les entrées du joueur
@@ -89,6 +92,11 @@ public class ScriptCamera : MonoBehaviour
             transform.Translate(Vector3.up * verticalMovement);
         }
         */
+        else
+        {
+            transform.position = new Vector3(6f, 6f, -4f);
+            transform.rotation = Quaternion.Euler(23f, -33f, 0f);
+        }
     }
 
 

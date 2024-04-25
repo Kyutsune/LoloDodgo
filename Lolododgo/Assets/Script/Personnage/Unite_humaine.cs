@@ -30,7 +30,7 @@ public class Unite_humaine : Unite
         }
     }
 
-    void Update()
+    protected override void Update()
     {   
         if (Input.GetMouseButton(1))
         {
@@ -59,6 +59,7 @@ public class Unite_humaine : Unite
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5*Time.deltaTime);
         }
+        base.Update();
     }
 
 }

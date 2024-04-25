@@ -17,6 +17,7 @@ public class Gestion_prefab
 
     public void DetruirePrefab(GameObject objet)
     {
+        Debug.Log("DetruirePrefab");
         GameObject.Destroy(objet);
     }
 

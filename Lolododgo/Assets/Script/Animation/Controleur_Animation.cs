@@ -51,8 +51,5 @@ public class Controleur_Animation : MonoBehaviour
         {
             setWalking(false, animator);
         }
-
-    
-
     }
 }

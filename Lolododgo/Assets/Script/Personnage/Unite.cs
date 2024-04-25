@@ -13,6 +13,13 @@ public class Unite : MonoBehaviour
     private int vitesse_deplacement;
     private float vitesse_attaque;
     private float vitesse_projectiles;
+
+    private GameObject corps_unite;
+    private Gestion_prefab gestion_prefab_unite;
+
+    private Controleur_Animation animator_controller;
+    private Animator animator_unite_a_controller;
+
     public GameObject bulletPrefab;
 
 
@@ -113,6 +120,13 @@ public class Unite : MonoBehaviour
         this.isshooting = false;
         this.en_position_pour_tirer=false;
         this.vitesse_deplacement=VitesseDeplacement;
+        gestion_prefab_unite = new Gestion_prefab();
+        corps_unite = gestion_prefab_unite.CreerPrefab(Positionx,Positiony,Positionz);
+
+        animator_controller = gameObject.AddComponent<Controleur_Animation>();
+        animator_unite_a_controller=corps_unite.GetComponent<Animator>();
+        animator_controller.Start_animator_controler(animator_unite_a_controller);
+
     }
 
 
@@ -122,6 +136,12 @@ public class Unite : MonoBehaviour
         this.positiony = y;
         this.positionz = z;
     }
+    public void DeplacerVector(Vector3 newPosition)
+    {
+        this.positionx = newPosition.x;
+        this.positiony = newPosition.y;
+        this.positionz = newPosition.z;
+    }
 
     public void Attaquer(Unite unite)
     {
@@ -130,13 +150,21 @@ public class Unite : MonoBehaviour
 
 
 
-
-    public void GestionEvenement()
+///Ici a titre éducatif,je rajoute l'explication des mots clés protected et virtual (donnés par chatgpt)
+/* Explication
+En utilisant le modificateur protected, vous permettez aux classes dérivées telles que Unite_humaine d'accéder et de redéfinir 
+la méthode Update() si nécessaire. Notez également l'utilisation du mot-clé virtual, ce qui signifie que cette méthode peut être 
+redéfinie dans les classes dérivées si besoin.
+*/
+//voir l'utilisation de ce Update dans la classe Unite_humaine par exemple,dans sa propre Update()
+    protected virtual void Update()
     {
         if (this.vie <= 0)
         {
             Destroy(this.gameObject);
+            gestion_prefab_unite.DetruirePrefab(corps_unite);
         }
+
         if(UnityEngine.Input.GetKeyDown(KeyCode.T))
         {
             if(IsWalking==true)
@@ -145,6 +173,12 @@ public class Unite : MonoBehaviour
                 StopWalking(temps_lever_arme+shootingDuration);
             }
         }
+
+        gestion_prefab_unite.DeplacerPrefab_a_partir_unite(corps_unite, this);
+        animator_controller.animation(this, animator_unite_a_controller);
+
+        
+        Attaquer(this);
     }
 
 
