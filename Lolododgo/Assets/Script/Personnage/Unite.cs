@@ -22,6 +22,9 @@ public class Unite : MonoBehaviour
 
     public GameObject bulletPrefab;
 
+    public AudioSource audioSource;
+
+
 
 
     private bool iswalking;
@@ -127,6 +130,8 @@ public class Unite : MonoBehaviour
         animator_controller = gameObject.AddComponent<Controleur_Animation>();
         animator_unite_a_controller=corps_unite.GetComponent<Animator>();
         animator_controller.Start_animator_controler(animator_unite_a_controller);
+        audioSource=corps_unite.GetComponent<AudioSource>();
+
     }
 
 
@@ -167,6 +172,10 @@ public class Unite : MonoBehaviour
 
             // Affectez cette direction à la vélocité du Rigidbody du projectile
             bullet.GetComponent<Rigidbody>().velocity = moveDirection * vitesse_projectiles;
+            if(audioSource.isPlaying==false)
+            {
+                audioSource.Play();
+            }
         }
     }
 
@@ -196,12 +205,13 @@ redéfinie dans les classes dérivées si besoin.
     public void Tir()
     {
         if(!isshooting && !en_position_pour_tirer)
-        StartShooting(temps_lever_arme,shootingDuration);
+            StartShooting(temps_lever_arme,shootingDuration);
     }
 
     // Fonction pour démarrer le tir pendant une durée spécifiée
     void StartShooting(float temp_a_lever_arme,float duration)
     {
+        audioSource.clip = Resources.Load<AudioClip>("Musique/bruitage couteau");
         if(VitesseAttaque>1)
         {
             temp_a_lever_arme=temp_a_lever_arme/VitesseAttaque;
