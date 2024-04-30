@@ -10,12 +10,15 @@ public class Unite_ennemie : Unite
             Vector3 targetPosition = new Vector3(targetUnit.Positionx, targetUnit.Positiony, targetUnit.Positionz);
             Vector3 direction = (targetPosition - new Vector3(this.Positionx, this.Positiony, this.Positionz)).normalized;
  
-                float distance = Outil.distanceUnite(this,targetUnit);
-                if(distance > 5f){
-                    Vector3 movement = direction * VitesseDeplacement * Time.deltaTime;
-                    DeplacerVector(movement);
+            float distance = Outil.distanceUnite(this,targetUnit);
+            if(distance > 5f){
+                Vector3 movement = direction * VitesseDeplacement * Time.deltaTime;
+                DeplacerVector(movement);
             }
-        }   
+        }
     }
+
+
+    
     
 }
